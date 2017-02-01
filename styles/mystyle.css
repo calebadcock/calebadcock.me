@@ -196,3 +196,21 @@ body {
 	font-weight: 400;
 	margin-top: 16px;
 }
+
+.content-row {
+	display: flex;
+	flex-direction: row;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+.content-item {
+	display: flex;
+	padding-left: inherit;
+	padding-right: inherit;
+}
+
+.content-column {
+	display: flex;
+	flex-direction: column;
+}
