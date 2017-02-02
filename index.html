@@ -1,124 +1,329 @@
+<!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-	<title>Caleb Adcock</title>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-	<link href="styles/mystyle.css" rel="stylesheet" type="text/css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="scripts/myscript.js"></script>
+	<meta name="description" content="calebadcock.me - Software Developer "/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<title>Caleb Adcock - Software Developer</title>
+
+	<link rel="shortcut icon" type="image/ico" href="img/icon.ico"/>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+	<link type="text/css" href="css/hamburger.css" rel="stylesheet">
+	<link type="text/css" href="css/main.min.css" rel="stylesheet">
+	<link type="text/css" href="css/jquery.fancybox.css" rel="stylesheet" media="screen" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
+	<script type="text/javascript" src="lib/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="lib/jquery.smoothwheel.js"></script>
 </head>
+
+<script type="text/javascript">
+
+    // Returns true if the specified element is in the window, based on its top & middle position
+	function isScrolledIntoView(elem) {
+		var docViewTop = $(window).scrollTop();
+		var docViewBottom = docViewTop + $(window).height();
+		var elemTop = $(elem).offset().top;
+		var elemBottom = elemTop + ($(elem).height() / 4) + 10;
+		elemTop = elemTop + ($(elem).height() / 4) - 10;
+
+    	return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+	}
+
+	function isHeaderHidden(elem) {
+		var docViewTop = $(window).scrollTop();
+		var docViewBottom = docViewTop + $(window).height();
+
+		var elemTop = $(elem).offset().top;
+		var elemBottom = elemTop + $(elem).height();
+
+		return (elemBottom - 64 < docViewTop);
+	}
+
+	function setHeader() {
+		if (isHeaderHidden($('#intro'))) {
+			$('#header').addClass('blue');
+		} else {
+			$('#header').removeClass('blue');
+		}
+	}
+
+	$(document).ready(function() {
+        // Toggle hamburger menu visibility on click
+		$('#mobile_nav_toggle').on('click', function() {
+			$('#mobile_nav_toggle .hamburger').toggleClass('is-active');
+			if (document.body.classList.contains('hamburgler-active')) {
+				document.body.classList.remove('hamburgler-active');
+			} else {
+				document.body.classList.add('hamburgler-active');
+			}
+		});
+
+        // Hide hamburger on escape pressed
+		window.addEventListener("keyup", function(e) {
+			if (e.keyCode == 27) document.body.classList.remove('hamburgler-active');
+		}, false);
+
+		var animating = false;
+		$('.nav_link').on('click', function(e) {
+			e.preventDefault();
+
+			var href = $(this).attr('href');
+
+            // Give clicked header link 'active' class
+			$('#header nav a h6').removeClass('active');
+			$('#header nav a[href="' + href + '"] h6').addClass('active');
+
+            // Don't animate on smaller screens, to help performance
+            var animationTime = 0;
+            if ($(window).width() > 680)
+                animationTime = 1000;
+
+            // Stop current animations and animate to position of link's href
+			$('html, body').stop(true, false);
+
+			animating = true;
+			$('html, body').animate({
+				scrollTop: $(href).offset().top
+			}, animationTime, function() {
+				animating = false;
+			});
+            // Hide hamburger menu if it's currently showing
+			$('#mobile_nav_toggle .hamburger').removeClass('is-active');
+			document.body.classList.remove('hamburgler-active');
+		});
+
+        // Set active header link when the user scrolls to the corresponding section
+		var ids = [];
+		$('#header nav a.nav_link').each(function() { ids.push($(this).attr('href')); });
+		$(document).scroll(function() {
+
+			setHeader();
+
+			if (animating)
+				return;
+
+			var found = false;
+			for (var i = 0; i < ids.length; i++) {
+				if (isScrolledIntoView($(ids[i]))) {
+					$('#header nav a h6').removeClass('active');
+					$('#header nav a[href="' + ids[i] + '"] h6').addClass('active');
+					found = true;
+				}
+			}
+			if (!found) {
+				$('#header nav a h6').removeClass('active');
+			}
+		});
+
+        // Set active header link based on initial URL & hash
+		var currHash = '#intro';
+		if(window.location.hash) {
+			currHash = window.location.hash;
+		}
+		$('#header nav a[href="' + currHash + '"] h6').addClass('active');
+
+		$("#parallax").backstretch("img/code.png");
+
+		$('.zoomable_image').fancybox({
+			'hideOnContentClick': true,
+			helpers: {
+				overlay: {
+					locked: false
+				}
+			}
+		});
+
+		$("#trayak_logo").backstretch("img/trayak.png");
+
+		setHeader();
+
+//		$("html, body").smoothWheel();
+	});
+</script>
+
 <body>
-	<div id="header" layout="row">
-		<a href="#home" class="nav-link">
-			<h2>CALEB ADCOCK</h2>
-		</a>
-		<div id="nav-bar" layout="row">
-			<a href="#about" class="nav-link">
-				<h4>about</h4>
+	<div id="mobile_nav">
+  		<div>
+			<a style="text-decoration: none" href="#about" class="nav_link"><h1>About</h1></a>
+			<a style="text-decoration: none" href="#work" class="nav_link"><h1>Work</h1></a>
+			<a style="text-decoration: none" href="#projects" class="nav_link"><h1>Projects</h1></a>
+			<a style="text-decoration: none" href="#contact" class="nav_link"><h1>Contact</h1></a>
+			<a style="text-decoration: none" target="_blank" href="resume.pdf"><h1>Resume</h1></a>
+		</div>
+	</div>
+
+	<div id="header">
+			<a href="#intro" class="nav_link" style="text-decoration:none;">
+				<div id="logo">
+					<h2>Caleb Adcock</h2>
+				</div>
 			</a>
-			<a href="#work" class="nav-link">
-				<h4>work</h4>
+		<nav>
+			<a href="#about" class="nav_link"><h6>About</h6></a>
+			<a href="#work" class="nav_link"><h6>Work</h6></a>
+			<a href="#projects" class="nav_link"><h6>Projects</h6></a>
+			<a href="#contact" class="nav_link"><h6>Contact</h6></a>
+			<a target="_blank" href="resume.pdf"><h6>Resume</h6></a>
+		</nav>
+		<div id="mobile_nav_toggle">
+			<button class="hamburger hamburger--squeeze" type="button">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</button>
+		</div>
+	</div>
+
+	<div id="parallax" class="section_wrapper"></div>
+	<div id="intro" class="section_wrapper">
+		<div class="section_content">
+			<h1>My name is Caleb Adcock.</h1
+			<br>
+			<h2>I'm a developer.</h2>
+			<br>
+			<a href="#about" class="nav_link" style="text-decoration: none;">
+				<div class="mtrl-button font-bold">
+					Learn More
+				</div>
 			</a>
-			<a href="#projects" class="nav-link">
-				<h4>projects</h4>
-			</a>
-			<a href="#contact" class="nav-link">
-				<h4>contact</h4>
+			<a class="nav_link" href="#contact" style="text-decoration: none;">
+				<div class="mtrl-button-flat font-bold">
+					Email Me
+				</div>
 			</a>
 		</div>
 	</div>
-	<div class="content-section" id="home">
-		<div id="intro">
-			<div>
-				<h1>Hey there,</h1>
-				<h1>my name is Caleb Adcock.</h1>
-				<h1>I'm a developer.</h1>
+
+	<div id="about" class="section_wrapper">
+		<div class="section_content">
+			<img class="profile_pic" src="img/caleb.png" alt="Caleb">
+			<div class="profile_links">
+				<a target="_blank" href="https://stackoverflow.com/users/5181636/caleb"><img src="img/stackoverflow.png" alt="StackOverflow"></a>
+				<a style="margin-left:16px;"target="_blank" href="https://github.com/calebadcock"><img src="img/github.png" alt="Github"></a>
 			</div>
-		</div
-	</div>
-	<div class="content-section" id="about">
-		<div class="card">
-			<div class="wrapper-card-title">
-				<div class="card-title">
-					About Me
-				</div>
-			</div>
-			<div class="card-content">
-				<div class="content-column">
-					<p>Currently a student at the University of Cincinnati stuyding Computer Science.</p>
-					<div class="content-row">
-						<div class="content-item">
-							<!-- IMAGE -->
-							<h1>Swift</h1>
-						</div>
-						<div class="content-item">
-							<!-- IMAGE -->
-							<h1>Java</h1>
-						</div>
-						<div class="content-item">
-							<!-- IMAGE -->
-							<h1>Node</h1>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="content-section" id="work">
-		<div class="card">
-			<div class="wrapper-card-title">
-				<div class="card-title">
-					My Work
-				</div>
-			</div>
-			<div class="card-content">
+			<div id="caleb" class="section_header hide_on_mobile"></div>
+			<br><br>
+			<!-- desktop layout -->
+			<div class="hide_on_mobile">
 				<div>
-					Trayak LLC
+					<h1 class="content_header">Who am I?</h1>
+					<br />
+					<p>
+						I am currently a 3rd year student at the University of Cincinnati where I am working towards a Bachelors in Computer Science.
+					</p>
+					<br />
+					<p>
+						I am expecting to graduate in May of 2019.
+					</p>
 				</div>
+				<br><br>
 				<div>
-					Syntonic LLC
+					<h1 class="content_header">Education</h1>
+					<br />
+					<p>
+						I am currently a 3rd year student at the University of Cincinnati where I am working towards a Bachelors in Computer Science.
+					</p>
+					<br />
+					<p>
+						I am expecting to graduate in May of 2019.
+					</p>
+				</div>
+				<br />
+				<br />
+			</div>
+
+			<!-- mobile layout -->
+			<table class="show_on_mobile">
+				<tr>
+					<td>
+						<h1 class="content_header">Who am I?</h1>
+						<br>
+						<div style="text-align:left">
+							<p>
+								I am currently a 3rd year student at the University of Cincinnati where I am working towards a Bachelors in Computer Science.
+							</p>
+							<br />
+							<p>
+								I am expecting to graduate in May of 2019.
+							</p>
+						</div>
+					</td>
+					<td>
+						<h1 class="content_header">Education</h1>
+						<br>
+						<div style="text-align:left">
+							<p>
+								I am currently a 3rd year student at the University of Cincinnati where I am working towards a Bachelors in Computer Science.
+							</p>
+							<br>
+							<p>
+								I am expecting to graduate in May of 2019.
+							</p>
+						</div>
+						<br>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div id="work" class="section_wrapper">
+		<div class="section_content">
+			<!-- Trayak -->
+			<div class="work_item">
+				<div class="header">
+					<h1 class="section_subheader">Trayak LLC</h1>
+					<h1 class="content_header">iOS | Web</h1>
+					<h1 class="content_header">June 2015 - December 2016</h1>
+				</div>
+				<div class="content">
+					<table>
+						<tr>
+							<td style="vertical-align:middle;">
+								<img class="screenshot" src="img/trayak.png" alt="Trayak">
+							</td>
+							<td style="vertical-align:middle;">
+								<p>
+									Trayak is a startup with a focus on sustainability. They offer solutions to help manufacturers and product designers achieve their sustainability goals.
+								</p>
+								<br>
+								<p>
+									During my time as a co-op, I was able to work on two of their products. I was the lead developer for an iOS application as well as the lead developer for an AngularJS web app.
+								</p>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="content-section" id="projects">
-		<div class="card">
-			<div class="wrapper-card-title">
-				<div class="card-title">
-					My Projects
-				</div>
-			</div>
-			<div class="card-content">
-				<div class="content-row">
-					<div class="content-item">
-						<!-- IMAGE -->
-						<h1>Life</h1>
-						<p>Simple iOS puzzle game based on Conway's Game of Life written in Swift.</p>
-					</div>
-					<div class="content-item">
-						<!-- IMAGE -->
-						<h1>Firestream</h1>
-						<p>Realtime playlist creator powered by Spotify.</p>
-					</div>
-					<div class="content-item">
-						<!-- IMAGE -->
-						<h1>Dodger.io</h1>
-						<p>Multiplayer game made written in Javascript connected to a server using WebSockets.</p>
-					</div>
-				</div>
-			</div>
+
+	<div id="projects" class="section_wrapper">
+		<div class="section_content">
+			<h1 class="section_header">Personal Projects</h1>
+			<br>
+			<table>
+				<tr>
+					<td>
+						<h2>Coming Soon</h2>
+					</td>
+			</table>
 		</div>
 	</div>
-	<div class="content-section" id="contact">
-		<div class="card">
-			<div class="wrapper-card-title">
-				<div class="card-title">
-					Contact Me
+
+	<div id="contact" class="section_wrapper">
+		<div class="section_content">
+			<h1 class="section_header">Still interested? Let's chat.</h1>
+			<br class="show_on_mobile">
+			<a target="_top" href="mailto:caleb.m.adcock@gmail.com" style="text-decoration: none;">
+				<div class="mtrl-button font-bold color-accent">
+					caleb.m.adcock@gmail.com
 				</div>
-			</div>
-			<div class="card-content">
-				caleb.m.adcock@gmail.com
-			</div>
+			</a>
 		</div>
 	</div>
 </body>
+
+</html>
