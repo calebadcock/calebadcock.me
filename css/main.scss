@@ -11,8 +11,8 @@ $color_blue_1_a68: rgba(3, 155, 229, .68);
 $color_blue_2_a68: rgba(2, 136, 209, .68);
 $color_blue_3_a68: rgba(1, 87, 155, .68);
 
-$color_link_hover: rgba(79, 195, 247, 1);
-$color_header_bg: rgba(13,71,161, 1);
+$color_link_hover: rgba(1, 87, 155, 1);
+$color_header_bg: rgba(3, 155, 229, 1);
 $color_mobile_nav_bg: rgba(0,0,0, .84);
 $color_text_gray: rgba(0, 0, 0, 0.54);
 $color_card_dark: #111111;
@@ -387,7 +387,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .profile_links {
 	img {
-		width: 8%;
+		width: 5%;
 		min-width: 50px;
 	}
 }
