@@ -217,7 +217,7 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
-#work, #projects {
+#work, #activities {
 	background-color: $white;
 }
 
@@ -361,6 +361,47 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
+#activities {
+	.activities_item {
+		margin-top: 24px;
+  		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		border-radius: 2px;
+		.header {
+			padding: 16px;
+			.section_subheader, .content_header {
+				color: $white;
+				letter-spacing: 1px;
+			}
+		}
+		&:nth-of-type(1) .header {
+			background: #43A047; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #03A9F4 , #01579B); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #03A9F4 , #01579B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		&:nth-of-type(2) .header {
+			background: #f857a6; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to left, #f857a6 , #ff5858); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to left, #f857a6 , #ff5858); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		&:nth-of-type(3) .header {
+			background: #00c6ff; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to bottom right, #1875D1 , #1976D2); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to bottom right, #1875D1 , #1976D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		&:nth-of-type(4) .header {
+			background: #00c6ff; /* fallback for old browsers */
+			background: -webkit-linear-gradient(to top left, #FF5722 , #FF8A65); /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to top left, #FF5722 , #FF8A65); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		}
+		.content {
+			padding: 16px;
+			p {
+				text-align: left;
+			}
+		}
+	}
+}
+
 .screenshot {
 	max-width: 50%;
 	margin-left: auto;
@@ -370,6 +411,10 @@ h1, h2, h3, h4, h5, h6 {
 	&.wide {
 		max-width: 80%;
 	}
+}
+
+.screenshot-large {
+	max-width: 90%;
 }
 
 .mfp-figure:after {
